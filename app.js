@@ -259,6 +259,16 @@
   //  missing the procedural fallback simply stays in place.
   // -----------------------------------------------------------------
   const modelCache = {};
+  // image-based lighting for the loaded models (what Sketchfab's viewer does) – gold, silk and
+  // glossy paint need reflections to look right. Applied to model materials only, not the hall.
+  let _env = null;
+  function envMap() {
+    if (_env || !THREE.RoomEnvironment) return _env;
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    _env = pmrem.fromScene(new THREE.RoomEnvironment(), 0.04).texture;
+    pmrem.dispose();
+    return _env;
+  }
   let _gltf = null;
   function gltfLoader() {   // shared loader with Draco decoding (models are Draco-compressed to keep the site small)
     if (_gltf) return _gltf;
@@ -270,12 +280,13 @@
   function getModel(key) {
     const cfg = (C.models || {})[key];
     if (!cfg || !cfg.path || !THREE.GLTFLoader || (LITE && cfg.lite === false)) return Promise.reject(new Error('not configured'));
-    if (!modelCache[key]) modelCache[key] = new Promise((res, rej) => gltfLoader().load(cfg.path, g => {
+    if (!modelCache[key]) modelCache[key] = new Promise((res, rej) => gltfLoader().load(cfg.path + '?v=' + (C.version || 1), g => {
       if (cfg.keep) {   // model packs several variants side by side – keep just one node
         const keep = g.scene.getObjectByName(cfg.keep);
         if (keep) keep.parent.children.slice().forEach(c => { if (c !== keep) c.parent.remove(c); });
       }
-      g.scene.traverse(o => { if (o.isMesh) { o.castShadow = o.receiveShadow = true; if (o.material && o.material.map) o.material.map.encoding = THREE.sRGBEncoding; } });
+      const env = envMap();
+      g.scene.traverse(o => { if (o.isMesh) { o.castShadow = o.receiveShadow = true; if (o.material) { if (o.material.map) o.material.map.encoding = THREE.sRGBEncoding; if (env) { o.material.envMap = env; o.material.envMapIntensity = 1.0; o.material.needsUpdate = true; } } } });
       // measure once; every clone reuses the same normalisation
       const bb = new THREE.Box3().setFromObject(g.scene);
       g.scene.userData.bb = bb;
