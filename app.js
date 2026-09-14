@@ -6,7 +6,14 @@
   // Lite mode for low-end phones: no shadows/antialias, fewer lights, procedural props instead
   // of heavy models, fewer petals. Auto-detected; force with ?lite or ?hd in the URL.
   const qs = new URLSearchParams(location.search);
-  const LITE = qs.has('lite') || (!qs.has('hd') && (isTouch || (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4));
+  // Quality decision: URL flag > saved preference > device capability (CPU cores, RAM, GPU model).
+  // Phones are NOT lite by default any more – a flagship phone gets the full scene.
+  const gpuName = (() => { try { const gl = document.createElement('canvas').getContext('webgl'); const ext = gl && gl.getExtension('WEBGL_debug_renderer_info'); return ext ? String(gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)) : ''; } catch (e) { return ''; } })();
+  const weakGpu = /Adreno \(TM\) [1-6]\d\d\b|Adreno [1-6]\d\d\b|Mali-[GT][1-5]\d\b|Mali-4|PowerVR|Intel\(R\) HD Graphics [2-5]|SwiftShader/i.test(gpuName);
+  const weakDevice = (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 4 || weakGpu;
+  let savedQuality = null; try { savedQuality = localStorage.getItem('pandal-quality'); } catch (e) {}
+  const LITE = qs.has('lite') || (!qs.has('hd') && (savedQuality ? savedQuality === 'lite' : weakDevice));
+  console.info('Pandal quality:', LITE ? 'lite' : 'full', '| GPU:', gpuName || 'unknown', '| cores:', navigator.hardwareConcurrency, '| mem:', navigator.deviceMemory);
 
   // =================================================================
   //  Layout (matches the sketch: pandal at the back, entry on the
@@ -356,6 +363,32 @@
       if (o.action) interactable(wrap, o.action, o.label);
       if (o.onLoad) o.onLoad(wrap);
     }).catch(err => { if (err && err.message !== 'not configured' && !modelCache[key + ':warned']) { modelCache[key + ':warned'] = true; console.warn('Model "' + key + '" not found at ' + C.models[key].path + ' – using built-in version. Run: SKETCHFAB_TOKEN=… node download-models.mjs'); } });
+  }
+  // quality toggle (intro / help screen)
+  const qualEl = document.getElementById('quality');
+  if (qualEl) {
+    qualEl.querySelector('span').textContent = LITE ? 'Lite (faster)' : 'Full (all 3D models)';
+    qualEl.querySelector('button').textContent = LITE ? 'Switch to Full quality' : 'Switch to Lite mode';
+    qualEl.querySelector('button').addEventListener('click', () => {
+      try { localStorage.setItem('pandal-quality', LITE ? 'full' : 'lite'); } catch (e) {}
+      location.href = location.pathname + (LITE ? '?hd' : '?lite');
+    });
+  }
+  // safety net: if full mode actually runs badly on this device, drop to lite once (unless the user chose full)
+  let fpsFrames = 0, fpsStart = 0, fpsChecked = false;
+  function fpsGuard(now) {
+    if (LITE || fpsChecked || savedQuality === 'full' || qs.has('hd')) return;
+    if (!fpsStart) { fpsStart = now; return; }
+    fpsFrames++;
+    if (now - fpsStart > 8000) {
+      fpsChecked = true;
+      const fps = fpsFrames / ((now - fpsStart) / 1000);
+      if (fps < 18) {
+        toast('Switching to Lite mode for smoother performance (you can change this from the ? menu)');
+        try { localStorage.setItem('pandal-quality', 'lite'); } catch (e) {}
+        setTimeout(() => { location.href = location.pathname + '?lite'; }, 2500);
+      }
+    }
   }
   function renderCredits() {
     const el = document.getElementById('credits'); if (!el) return;
@@ -1057,6 +1090,7 @@
     requestAnimationFrame(tick);
     const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime;
 
+    if (!paused) fpsGuard(performance.now());
     if (!paused) {
       let fwd = 0, side = 0;
       if (keys.KeyW || keys.ArrowUp) fwd += 1; if (keys.KeyS || keys.ArrowDown) fwd -= 1;

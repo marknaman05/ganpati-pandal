@@ -60,3 +60,6 @@ body.touch #crosshair { display: none; }
 #made-by { margin-top: 16px; font-size: 13px; opacity: .85; }
 #made-by a { color: var(--saffron); font-weight: 600; text-decoration: none; }
 #made-by a:hover { text-decoration: underline; }
+#quality { margin-top: 14px; font-size: 13px; opacity: .85; }
+#quality button { background: none; border: 1px solid rgba(255,200,120,.5); color: var(--saffron); border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 12px; }
+#quality button:hover { background: rgba(214,32,122,.35); }

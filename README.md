@@ -62,8 +62,10 @@ them in Blender (Decimate modifier to ~200k faces) before exporting.
 
 ## Performance on phones
 
-A **lite mode** switches on automatically on touch devices / low-core / low-memory devices
-(force it with `?lite`, or force full quality with `?hd`): no shadows or antialiasing,
+A **lite mode** switches on automatically for weak devices only (≤4 CPU cores, ≤4 GB RAM,
+or a low-end GPU such as Adreno 6xx / Mali-G5x) – flagship phones get the full scene. If full
+mode still measures under 18 fps in the first seconds, the page drops to lite once. Users can
+switch either way from the `?` screen (remembered), or force with `?lite` / `?hd`: no shadows or antialiasing,
 pixel ratio 1, fewer point lights, fewer petals, and the heavy models (lamps, pots, incense
 burner) are replaced by the built-in low-poly props. Full mode renders ~1M triangles, lite ~190k.
 
