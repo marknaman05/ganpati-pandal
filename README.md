@@ -22,7 +22,7 @@ python3 -m http.server 8080      # or: npx serve .
   big murti on the upper platform, small murti in front with pooja items, brass lamps,
   flower pots, blue & warm stage spots.
 - **Chairs** in rows either side of the aisle; windows, fans, ACs, speakers, clock.
-- **Donation QR standee** to the right of the stage + acrylic donation box on the stage.
+- **Donation standee** with bank details beside the stage + acrylic donation box on the stage.
 - **Temple bell** hanging to the left of the stage.
 
 ## Interactions
@@ -30,7 +30,7 @@ python3 -m http.server 8080      # or: npx serve .
 | Target                 | Action                                             |
 |------------------------|----------------------------------------------------|
 | Big / small murti      | Play / pause aarti (also the ▶ Aarti HUD button)   |
-| QR standee / donation box | Opens donate popup with scannable UPI QR; on phones it deep-links straight to Paytm / UPI |
+| Donation standee / box | Opens the donate popup with the mandal's bank account details (tap-to-copy) |
 | Bell                   | Rings (synthesised, no file needed)                |
 
 Controls — desktop: `WASD`/arrows walk, mouse look, `Shift` run, click or `E` interact, `Esc` pause.
@@ -73,8 +73,7 @@ burner) are replaced by the built-in low-poly props. Full mode renders ~1M trian
 
 Edit `config.js`:
 
-- `upi.id` — the mandal's UPI id; the QR in the hall is generated from it.
-- `paymentLink` — optional Paytm link shown as an extra button.
+- `donation` — account name and bank accounts (bank, account, IFSC, branch) shown on the standee and in the popup.
 - `aarti[]` — playlist. Drop mp3 files into `assets/aarti/` and list them
   (e.g. `sukhkarta-dukhharta.mp3`, `jai-dev-jai-dev.mp3`).
 - Banner text, dates and venue (year is 2026; confirm the festival dates).

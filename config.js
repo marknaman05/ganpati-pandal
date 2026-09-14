@@ -3,7 +3,7 @@
 //  Edit this file only; no need to touch app.js.
 // ---------------------------------------------------------------
 window.PANDAL_CONFIG = {
-  version: 5,   // bump this whenever a model/asset file is replaced, so browsers don't reuse a cached copy
+  version: 6,   // bump this whenever a model/asset file is replaced, so browsers don't reuse a cached copy
 
   // Banner text (from the real banner in the reference photos)
   mandalName:   'पूर्वांचल महाराष्ट्र मंडळ (रजि.)',
@@ -14,16 +14,15 @@ window.PANDAL_CONFIG = {
   establishedYear: 1984,
 
   // Donation ------------------------------------------------------
-  // The QR in the hall is generated from this UPI id (scannable with
-  // Paytm / PhonePe / GPay). Clicking the QR stand opens the UPI link.
-  upi: {
-    id:        'mandal@paytm',                       // <-- change to the mandal's UPI id
-    payeeName: 'Purvanchal Maharashtra Mandal',
-    note:      'Ganesh Utsav Donation',
+  // Donation – bank transfer (NEFT / IMPS / UPI to account). Shown on the standee
+  // in the hall and in the Donate popup with copy buttons.
+  donation: {
+    accountName: 'Purvanchal Maharashtra Mandal',
+    banks: [
+      { bank: 'State Bank of India', account: '30615287936',     ifsc: 'SBIN0005195', branch: 'C-61, Anand Vihar, Delhi - 110092' },
+      { bank: 'IDBI',                account: '550104000000189', ifsc: 'IBKL0000268', branch: 'D-105, Vivek Vihar, Delhi - 110095' },
+    ],
   },
-  // Optional: a Paytm payment link (https://p.paytm.me/...). If set, the
-  // donate popup shows an extra "Open Paytm" button.
-  paymentLink: '',
 
   // Real logo image (optional) – drawn onto the banner when present
   images: {

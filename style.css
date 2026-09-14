@@ -44,11 +44,14 @@ body.touch #crosshair { display: none; }
 #donate-modal h2 { margin: 0 0 6px; font-family: var(--font-dev); color: #b8141c; }
 #donate-modal p { margin: 0 0 14px; font-size: 14px; color: #555; }
 #donate-modal .close { position: absolute; top: 10px; right: 10px; border: 0; background: #eee; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 14px; }
-#qr-holder { display: flex; justify-content: center; margin-bottom: 10px; }
-#qr-holder img, #qr-holder canvas { width: 220px !important; height: 220px !important; border: 6px solid #fff; box-shadow: 0 0 0 2px #b8141c; border-radius: 8px; }
-#qr-holder img { display: block; }
-#qr-holder canvas { display: none; }
-#upi-id { font-family: ui-monospace, monospace; font-size: 15px; margin-bottom: 14px; background: #f5f5f5; padding: 6px 10px; border-radius: 8px; display: inline-block; }
+#account-name { font-weight: 700; color: #1a2a80; margin-bottom: 10px; }
+.bank { text-align: left; background: #fff6e8; border: 1px solid #f7c98a; border-radius: 12px; padding: 10px 12px; margin-bottom: 10px; }
+.bank-name { font-weight: 700; color: #c8141c; margin-bottom: 6px; }
+.bank .row { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+.bank .k { width: 58px; font-size: 12px; color: #666; }
+.bank code { flex: 1; font-size: 15px; font-weight: 700; letter-spacing: .5px; }
+.bank button { border: 1px solid #f28c28; background: #fff; color: #c8141c; border-radius: 999px; padding: 3px 10px; font-size: 12px; cursor: pointer; }
+.bank .branch { font-size: 12px; color: #666; margin-top: 4px; }
 .pay-btn { display: block; text-decoration: none; background: linear-gradient(135deg, #0f4a9e, #00baf2); color: #fff; padding: 12px; border-radius: 999px; font-weight: 700; margin-bottom: 8px; }
 .pay-btn.secondary { background: #f5f5f5; color: #0f4a9e; border: 1px solid #cfe0f5; }
 #donate-modal .fine { font-size: 13px; color: #b8141c; margin-top: 8px; font-weight: 600; }

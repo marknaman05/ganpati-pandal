@@ -252,21 +252,23 @@
     ctx.font = `bold 60px ${DEV_FONT}`; ctx.fillText(C.eventTitle || 'Ganesh Utsav', w / 2, 215);
   });
 
-  const upiLink = `upi://pay?pa=${encodeURIComponent((C.upi || {}).id || '')}&pn=${encodeURIComponent((C.upi || {}).payeeName || '')}&tn=${encodeURIComponent((C.upi || {}).note || '')}&cu=INR`;
-  let qrCanvas = null;
-  try {
-    const holder = document.getElementById('qr-holder');
-    new QRCode(holder, { text: upiLink, width: 512, height: 512, correctLevel: QRCode.CorrectLevel.M });
-    qrCanvas = holder.querySelector('canvas');
-  } catch (e) { console.warn('QR generation failed', e); }
-  T.qrBoard = canvasTex(768, 1024, (ctx, w, h) => {
+  const D = C.donation || { accountName: '', banks: [] };
+  T.qrBoard = canvasTex(768, 1024, (ctx, w, h) => {     // donation standee: bank details
     ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, w, h);
     ctx.fillStyle = '#c8141c'; ctx.fillRect(0, 0, w, 150);
     ctx.fillStyle = '#fff'; ctx.textAlign = 'center'; ctx.font = `bold 84px ${DEV_FONT}`; ctx.fillText('दान · DONATE', w / 2, 105);
-    if (qrCanvas) ctx.drawImage(qrCanvas, 128, 200, 512, 512);
-    ctx.fillStyle = '#222'; ctx.font = 'bold 40px system-ui, sans-serif'; ctx.fillText('Scan to pay via UPI / Paytm', w / 2, 790);
-    ctx.font = '34px ui-monospace, monospace'; ctx.fillText((C.upi || {}).id || '', w / 2, 850);
-    ctx.fillStyle = '#c8141c'; ctx.font = `bold 44px ${DEV_FONT}`; ctx.fillText('गणपती बाप्पा मोरया!', w / 2, 950);
+    ctx.fillStyle = '#222'; ctx.font = 'bold 34px system-ui, sans-serif'; ctx.fillText('Bank transfer · NEFT / IMPS / UPI', w / 2, 215);
+    ctx.fillStyle = '#1a2a80'; ctx.font = 'bold 36px system-ui, sans-serif'; ctx.fillText(D.accountName, w / 2, 275);
+    D.banks.forEach((b, i) => {
+      const y = 340 + i * 290;
+      ctx.fillStyle = '#fff3e0'; ctx.fillRect(48, y - 50, w - 96, 250);
+      ctx.strokeStyle = '#f28c28'; ctx.lineWidth = 4; ctx.strokeRect(48, y - 50, w - 96, 250);
+      ctx.textAlign = 'left'; ctx.fillStyle = '#c8141c'; ctx.font = 'bold 38px system-ui, sans-serif'; ctx.fillText(b.bank, 72, y + 4);
+      ctx.fillStyle = '#222'; ctx.font = '32px system-ui, sans-serif'; ctx.fillText('A/c No.', 72, y + 62); ctx.fillText('IFSC', 72, y + 118);
+      ctx.font = 'bold 40px ui-monospace, Menlo, monospace'; ctx.fillText(b.account, 230, y + 62); ctx.fillText(b.ifsc, 230, y + 118);
+      ctx.fillStyle = '#555'; ctx.font = '26px system-ui, sans-serif'; ctx.fillText(b.branch, 72, y + 170);
+    });
+    ctx.textAlign = 'center'; ctx.fillStyle = '#c8141c'; ctx.font = `bold 44px ${DEV_FONT}`; ctx.fillText('गणपती बाप्पा मोरया!', w / 2, 975);
   });
 
   // =================================================================
@@ -1062,20 +1064,34 @@
   // =================================================================
   const donateModal = document.getElementById('donate-modal');
   donateModal.hidden = true;
-  document.getElementById('upi-id').textContent = 'UPI ID: ' + ((C.upi || {}).id || '—');
-  document.getElementById('upi-link').href = upiLink;
-  if (C.paymentLink) { const pl = document.getElementById('paytm-link'); pl.href = C.paymentLink; pl.hidden = false; }
+  // bank details with copy buttons
+  {
+    const list = document.getElementById('bank-list');
+    document.getElementById('account-name').textContent = D.accountName;
+    const copy = (txt, btn) => { (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(() => { btn.textContent = 'Copied ✓'; setTimeout(() => { btn.textContent = 'Copy'; }, 1500); }).catch(() => toast(txt)); };
+    D.banks.forEach(b => {
+      const div = document.createElement('div'); div.className = 'bank';
+      div.innerHTML = `<div class="bank-name"></div>
+        <div class="row"><span class="k">A/c No.</span><code></code><button type="button">Copy</button></div>
+        <div class="row"><span class="k">IFSC</span><code></code><button type="button">Copy</button></div>
+        <div class="branch"></div>`;
+      div.querySelector('.bank-name').textContent = b.bank;
+      const rows = div.querySelectorAll('.row');
+      rows[0].querySelector('code').textContent = b.account; rows[0].querySelector('button').onclick = e => copy(b.account, e.target);
+      rows[1].querySelector('code').textContent = b.ifsc;    rows[1].querySelector('button').onclick = e => copy(b.ifsc, e.target);
+      div.querySelector('.branch').textContent = b.branch;
+      list.appendChild(div);
+    });
+  }
   function openDonate() {
     donateModal.hidden = false;
     if (locked) document.exitPointerLock();
-    // On phones the UPI deep link opens Paytm / any UPI app directly, as in the sketch.
-    if (isTouch) setTimeout(() => { location.href = C.paymentLink || upiLink; }, 300);
   }
   function closeDonate() { donateModal.hidden = true; if (!isTouch && !paused) canvas.requestPointerLock(); }
   document.getElementById('donate-close').addEventListener('click', closeDonate);
   donateModal.addEventListener('click', e => { if (e.target === donateModal) closeDonate(); });
   document.getElementById('btn-donate').addEventListener('click', openDonate);
-  document.getElementById('btn-help').addEventListener('click', () => { if (locked) document.exitPointerLock(); document.body.classList.add('show-credits'); renderCredits(); pause('Walk to the pandal, click the murti for aarti, the bell to ring it, and the QR stand to donate.'); });
+  document.getElementById('btn-help').addEventListener('click', () => { if (locked) document.exitPointerLock(); document.body.classList.add('show-credits'); renderCredits(); pause('Walk to the pandal, click the murti for aarti, the bell to ring it, and the donation stand to donate.'); });
 
   // toast
   let toastTimer;
