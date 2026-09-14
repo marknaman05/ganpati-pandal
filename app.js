@@ -151,7 +151,7 @@
     ctx.fillStyle = '#fff5b0'; ctx.fillRect(0, 0, size, size * 1.3);
     if (img) {
       const c = (C.images && C.images.logoCrop) || [0, 0, 1, 1];   // fractions [x, y, w, h] of the image to use
-      ctx.drawImage(img, c[0] * img.width, c[1] * img.height, c[2] * img.width, c[3] * img.height, 0, 0, size, size * 1.3);
+      ctx.drawImage(img, c[0] * img.width, c[1] * img.height, c[2] * img.width, c[3] * img.height, 0, 0, size, size * 4 / 3);
       ctx.restore(); return;
     }
     // fallback: hand-drawn version of the mandal logo (yellow card, black border, red monogram)

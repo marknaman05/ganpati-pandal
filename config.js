@@ -25,10 +25,9 @@ window.PANDAL_CONFIG = {
 
   // Real logo image (optional) – drawn onto the banner when present
   images: {
-    // Save the real banner photo as assets/images/banner.png and the logo is cut out of it.
-    // logoCrop = fractions [x, y, width, height] of the image that contain the logo card.
-    logo: 'assets/images/banner.png',
-    logoCrop: [0.012, 0.05, 0.16, 0.9],
+    // Mandal logo drawn onto the banner. logoCrop = fractions [x, y, w, h] of the image to use.
+    logo: 'assets/images/logo.png',
+    logoCrop: [0, 0, 1, 1],
   },
 
   // 3D models from Sketchfab -------------------------------------------
