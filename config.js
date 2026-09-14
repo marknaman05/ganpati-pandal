@@ -3,7 +3,7 @@
 //  Edit this file only; no need to touch app.js.
 // ---------------------------------------------------------------
 window.PANDAL_CONFIG = {
-  version: 2,   // bump this whenever a model/asset file is replaced, so browsers don't reuse a cached copy
+  version: 3,   // bump this whenever a model/asset file is replaced, so browsers don't reuse a cached copy
 
   // Banner text (from the real banner in the reference photos)
   mandalName:   'पूर्वांचल महाराष्ट्र मंडळ (रजि.)',

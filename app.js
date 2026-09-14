@@ -195,7 +195,7 @@
   if (C.images && C.images.logo) {
     const im = new Image();
     im.onload = () => { drawBanner(T.banner.image.getContext('2d'), 2048, 512, im); T.banner.needsUpdate = true; };
-    im.src = C.images.logo;
+    im.src = C.images.logo + '?v=' + (C.version || 1);
   }
   T.welcome = canvasTex(1024, 256, (ctx, w, h) => {
     ctx.fillStyle = '#ff8c1a'; ctx.fillRect(0, 0, w, h);
