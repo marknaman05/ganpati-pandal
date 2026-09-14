@@ -581,7 +581,7 @@
     placeModel('incenseBurner', V3(-1.0, top, s.z + 1.7), 0.25, { onLoad: w => { if (!LITE) { const sm = new THREE.PointLight(0xffb060, 0.25, 2, 2); sm.position.y = 0.35; w.add(sm); } } });
 
     // ---- pooja items on the front of the stage ----
-    const fz = s.z + 1.5;
+    const fz = s.z + 0.85;   // items span fz-0.2 … fz+0.85, all inside the stage edge (s.z + 2)
     // aarti thali: hidden until the aarti plays, then it floats in front of the murti and circles clockwise
     const thaliGroup = new THREE.Group();
     thaliGroup.add(new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.23, 0.03, 20), M.silver));
@@ -618,7 +618,7 @@
       const base = new THREE.Mesh(new THREE.BoxGeometry(0.66, 0.06, 0.5), M.wood); base.position.y = -0.25; g.add(base);
       const slot = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.01, 0.03), M.black); slot.position.y = 0.23; g.add(slot);
       const notes = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.12, 0.3), mat(0xe8dcb5)); notes.position.y = -0.16; g.add(notes);
-      g.position.set(3.2, top + 0.28, fz + 0.5); scene.add(g);
+      g.position.set(3.1, top + 0.28, fz + 0.45); scene.add(g);
       interactable(g, 'donate', 'Donate to the Mandal');
     }
     // scattered petals on the cloth
