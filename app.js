@@ -538,7 +538,7 @@
     const big = buildGanesha(0.6);
     big.position.copy(bigPos); scene.add(big);
     interactable(big, 'aarti', 'Play / pause Aarti');
-    placeModel('bigMurti', V3(s.x, top + 0.9, s.z - 1.1), 2.2, { fallback: big, action: 'aarti', label: 'Play / pause Aarti' });
+    placeModel('bigMurti', V3(s.x, top + 0.9, s.z - 1.1), 2.4, { fallback: big, action: 'aarti', label: 'Play / pause Aarti', rotY: (C.models.bigMurti && C.models.bigMurti.rotY) || 0 });
 
     // ---- small murti in front on a red satin seat, wrapped in marigold garlands ----
     box(1.4, 0.04, 1.2, M.redSatin, s.x, top + 0.02, s.z + 0.9);

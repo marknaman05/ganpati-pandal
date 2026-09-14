@@ -39,10 +39,9 @@ window.PANDAL_CONFIG = {
   // `store`: buy them on Sketchfab, download as glTF, unzip into the same folder,
   // and the app will use them automatically.
   models: {
-    bigMurti:      { path: 'assets/models/bigMurti/model.glb',
-                     uid: '6bfb2ec0c3ab4ea4980e2d7e05abd63b',     // free: "Lord Ganesha" by ronchoqa (CC-BY)
-                     store: '7e94735036414e1db67cf12a0d136388',   // your pick: "Lord Ganesha 01" (Sketchfab Store)
-                     credit: { title: 'Lord Ganesha', author: 'ronchoqa', url: 'https://sketchfab.com/3d-models/6bfb2ec0c3ab4ea4980e2d7e05abd63b' } },
+    bigMurti:      { path: 'assets/models/bigMurti/model.glb', rotY: -Math.PI / 2,   // model faces +x; turn it toward the hall
+                     uid: 'a93a83413e034b29803aed62577357c5',     // "Ganesha 3D" by lucas.rvdl (CC-BY)
+                     credit: { title: 'Ganesha 3D', author: 'lucas.rvdl', url: 'https://sketchfab.com/3d-models/a93a83413e034b29803aed62577357c5' } },
     smallMurti:    { path: 'assets/models/smallMurti/model.glb',
                      uid: '0138e4b2676c44828cec10c1bb480aff',     // free: "Ganesh Color" by ankit5 (CC-BY)
                      store: 'cee84a1ca6994beeae3260c4a5bc95b5',   // your pick: "Lord Ganesha Hindu Deity 03" (Store)
