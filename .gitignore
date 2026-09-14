@@ -1,0 +1,5 @@
+node_modules/
+.DS_Store
+assets/models/*/scene.gltf
+assets/models/*/scene.bin
+assets/models/*/textures/

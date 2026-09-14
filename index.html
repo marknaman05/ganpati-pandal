@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Digital Ganpati Pandal – Purvanchal Maharashtra Mandal</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app"></div>
+
+<!-- Intro / pause overlay -->
+<div id="overlay">
+  <div class="card">
+    <div class="ganesh">🕉️</div>
+    <h1>गणेश उत्सव 2026</h1>
+    <h2>पूर्वांचल महाराष्ट्र मंडळ (रजि.) · Digital Pandal</h2>
+    <p id="overlay-msg">Walk into the hall, take darshan, play the aarti and offer a donation.</p>
+    <div class="controls">
+      <div class="desktop-only"><b>W A S D</b> / arrows – walk &nbsp;·&nbsp; <b>Mouse</b> – look &nbsp;·&nbsp; <b>Shift</b> – run &nbsp;·&nbsp; <b>Click</b> – interact &nbsp;·&nbsp; <b>Esc</b> – pause</div>
+      <div class="touch-only"><b>Left joystick</b> – walk &nbsp;·&nbsp; <b>Drag right side</b> – look &nbsp;·&nbsp; <b>Tap</b> – interact</div>
+    </div>
+    <button id="enter-btn">🚪 Enter the Pandal</button>
+    <div id="credits" hidden></div>
+    <div id="made-by">Made with ❤️ and 🙏 by <a href="https://mynameisnaman.in" target="_blank" rel="noopener">Naman Ajay Markhedkar</a></div>
+  </div>
+</div>
+
+<!-- HUD -->
+<div id="hud" hidden>
+  <div id="crosshair"></div>
+  <div id="tooltip" hidden></div>
+  <div id="now-playing" hidden>🎵 <span></span></div>
+  <div id="hud-bar">
+    <button id="btn-bell" title="Ring the bell">🔔</button>
+    <button id="btn-aarti" title="Play / pause aarti">▶ Aarti</button>
+    <button id="btn-next" title="Next aarti">⏭</button>
+    <button id="btn-donate" title="Donate">🙏 Donate</button>
+    <button id="btn-help" title="Help">?</button>
+  </div>
+  <div id="joystick" class="touch-only"><div id="joystick-knob"></div></div>
+</div>
+
+<!-- Donate modal -->
+<div id="donate-modal" hidden>
+  <div class="card">
+    <button class="close" id="donate-close">✕</button>
+    <h2>🙏 दान · Donate</h2>
+    <p>Scan with Paytm / PhonePe / Google Pay, or tap the button on your phone.</p>
+    <div id="qr-holder"></div>
+    <div id="upi-id"></div>
+    <a id="upi-link" class="pay-btn">Pay via UPI app</a>
+    <a id="paytm-link" class="pay-btn secondary" target="_blank" rel="noopener" hidden>Open Paytm link</a>
+    <div class="fine">Ganpati Bappa Morya!</div>
+  </div>
+</div>
+
+<div id="toast" hidden></div>
+<audio id="aarti-audio" preload="none"></audio>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/utils/SkeletonUtils.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+Model Information:
+* title:	Ganesh Color
+* source:	https://sketchfab.com/3d-models/ganesh-color-0138e4b2676c44828cec10c1bb480aff
+* author:	Pytorq Solutions (https://sketchfab.com/ankit5)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Ganesh Color" (https://sketchfab.com/3d-models/ganesh-color-0138e4b2676c44828cec10c1bb480aff) by Pytorq Solutions (https://sketchfab.com/ankit5) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

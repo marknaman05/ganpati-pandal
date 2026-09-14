@@ -1,0 +1,62 @@
+:root {
+  --saffron: #ff8c1a;
+  --magenta: #d6207a;
+  --cream: #fff4dc;
+  --font-dev: "Noto Sans Devanagari", "Kohinoor Devanagari", "Devanagari MT", "Mangal", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: #140a10; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color: #fff; }
+#app, #app canvas { position: fixed; inset: 0; display: block; touch-action: none; }
+
+.touch-only { display: none; }
+.desktop-only { display: block; }
+body.touch .touch-only { display: block; }
+body.touch .desktop-only { display: none; }
+body.touch #crosshair { display: none; }
+
+/* overlay ------------------------------------------------------ */
+#overlay { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: radial-gradient(ellipse at center, rgba(90,20,60,.85), rgba(10,4,8,.95)); z-index: 20; padding: 16px; }
+#overlay .card { text-align: center; max-width: 560px; width: 100%; background: rgba(255,244,220,.08); border: 1px solid rgba(255,200,120,.35); border-radius: 20px; padding: 32px 24px; backdrop-filter: blur(8px); box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+#overlay .ganesh { font-size: 52px; }
+#overlay h1 { font-family: var(--font-dev); font-size: 34px; margin: 6px 0 2px; color: var(--saffron); }
+#overlay h2 { font-family: var(--font-dev); font-size: 15px; font-weight: 500; margin: 0 0 14px; color: var(--cream); opacity: .9; }
+#overlay p { margin: 0 0 14px; opacity: .85; }
+#overlay .controls { font-size: 13px; opacity: .8; margin-bottom: 20px; line-height: 1.7; }
+#enter-btn { font-size: 18px; padding: 14px 28px; border-radius: 999px; border: 0; background: linear-gradient(135deg, var(--saffron), var(--magenta)); color: #fff; cursor: pointer; font-weight: 700; box-shadow: 0 8px 24px rgba(214,32,122,.45); }
+#enter-btn:hover { filter: brightness(1.08); }
+
+/* HUD ---------------------------------------------------------- */
+#hud { position: fixed; inset: 0; pointer-events: none; z-index: 10; }
+#crosshair { position: absolute; left: 50%; top: 50%; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: rgba(255,255,255,.85); box-shadow: 0 0 6px rgba(0,0,0,.6); }
+#tooltip { position: absolute; left: 50%; top: calc(50% + 22px); transform: translateX(-50%); background: rgba(20,8,14,.8); border: 1px solid rgba(255,200,120,.5); color: var(--cream); padding: 6px 12px; border-radius: 999px; font-size: 14px; white-space: nowrap; }
+#now-playing { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); background: rgba(20,8,14,.7); border: 1px solid rgba(255,140,26,.5); padding: 6px 14px; border-radius: 999px; font-size: 14px; }
+#hud-bar { position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; pointer-events: auto; }
+#hud-bar button { border: 1px solid rgba(255,200,120,.4); background: rgba(20,8,14,.75); color: #fff; font-size: 15px; padding: 10px 16px; border-radius: 999px; cursor: pointer; backdrop-filter: blur(6px); }
+#hud-bar button:hover { background: rgba(214,32,122,.6); }
+#hud-bar button.active { background: var(--saffron); color: #2a1200; font-weight: 700; }
+#joystick { position: absolute; left: 22px; bottom: 90px; width: 120px; height: 120px; border-radius: 50%; background: rgba(255,255,255,.12); border: 2px solid rgba(255,255,255,.3); pointer-events: auto; }
+#joystick-knob { position: absolute; left: 35px; top: 35px; width: 50px; height: 50px; border-radius: 50%; background: rgba(255,140,26,.85); }
+
+/* donate modal ------------------------------------------------- */
+#donate-modal { position: fixed; inset: 0; z-index: 30; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.7); padding: 16px; }
+#donate-modal .card { position: relative; background: #fff; color: #222; border-radius: 18px; padding: 28px 24px; width: 100%; max-width: 380px; text-align: center; }
+#donate-modal h2 { margin: 0 0 6px; font-family: var(--font-dev); color: #b8141c; }
+#donate-modal p { margin: 0 0 14px; font-size: 14px; color: #555; }
+#donate-modal .close { position: absolute; top: 10px; right: 10px; border: 0; background: #eee; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 14px; }
+#qr-holder { display: flex; justify-content: center; margin-bottom: 10px; }
+#qr-holder img, #qr-holder canvas { width: 220px !important; height: 220px !important; border: 6px solid #fff; box-shadow: 0 0 0 2px #b8141c; border-radius: 8px; }
+#qr-holder img { display: block; }
+#qr-holder canvas { display: none; }
+#upi-id { font-family: ui-monospace, monospace; font-size: 15px; margin-bottom: 14px; background: #f5f5f5; padding: 6px 10px; border-radius: 8px; display: inline-block; }
+.pay-btn { display: block; text-decoration: none; background: linear-gradient(135deg, #0f4a9e, #00baf2); color: #fff; padding: 12px; border-radius: 999px; font-weight: 700; margin-bottom: 8px; }
+.pay-btn.secondary { background: #f5f5f5; color: #0f4a9e; border: 1px solid #cfe0f5; }
+#donate-modal .fine { font-size: 13px; color: #b8141c; margin-top: 8px; font-weight: 600; }
+
+#toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: rgba(20,8,14,.9); border: 1px solid rgba(255,140,26,.6); padding: 10px 16px; border-radius: 12px; font-size: 14px; z-index: 40; max-width: 90vw; text-align: center; }
+
+#credits { margin-top: 18px; font-size: 11px; opacity: .65; line-height: 1.6; }
+#credits a { color: var(--saffron); }
+#made-by { margin-top: 16px; font-size: 13px; opacity: .85; }
+#made-by a { color: var(--saffron); font-weight: 600; text-decoration: none; }
+#made-by a:hover { text-decoration: underline; }
