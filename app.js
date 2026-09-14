@@ -197,6 +197,47 @@
     im.onload = () => { drawBanner(T.banner.image.getContext('2d'), 2048, 512, im); T.banner.needsUpdate = true; };
     im.src = C.images.logo + '?v=' + (C.version || 1);
   }
+  T.poster = canvasTex(768, 1024, (ctx, w, h) => {
+    ctx.fillStyle = '#fffdf6'; ctx.fillRect(0, 0, w, h);
+    // soft watercolour border with flowers
+    const g = ctx.createLinearGradient(0, 0, w, h); g.addColorStop(0, '#9fd3f2'); g.addColorStop(0.5, '#f7b7d2'); g.addColorStop(1, '#b8e0a8');
+    ctx.strokeStyle = g; ctx.lineWidth = 28; ctx.strokeRect(14, 14, w - 28, h - 28);
+    ctx.strokeStyle = '#7bc5a0'; ctx.lineWidth = 3; ctx.strokeRect(46, 46, w - 92, h - 92);
+    const flower = (x, y, c) => { for (let i = 0; i < 5; i++) { const a = i / 5 * 6.283; ctx.fillStyle = c; ctx.beginPath(); ctx.ellipse(x + Math.cos(a) * 14, y + Math.sin(a) * 14, 12, 8, a, 0, 6.283); ctx.fill(); } ctx.fillStyle = '#ffd54a'; ctx.beginPath(); ctx.arc(x, y, 7, 0, 6.283); ctx.fill(); };
+    flower(70, 90, '#f26d8f'); flower(w - 70, h - 90, '#f26d8f'); flower(70, h - 90, '#ff9fbf'); flower(w - 70, 90, '#ff9fbf');
+    // Ganesha silhouette (top right)
+    ctx.fillStyle = '#f2a445'; ctx.beginPath(); ctx.arc(600, 200, 60, 0, 6.283); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(600, 320, 78, 70, 0, 0, 6.283); ctx.fill();
+    ctx.fillStyle = '#e8892b'; ctx.beginPath(); ctx.ellipse(548, 205, 22, 34, 0, 0, 6.283); ctx.fill(); ctx.beginPath(); ctx.ellipse(652, 205, 22, 34, 0, 0, 6.283); ctx.fill();
+    ctx.strokeStyle = '#e8892b'; ctx.lineWidth = 20; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(600, 230); ctx.quadraticCurveTo(600, 290, 640, 300); ctx.stroke();
+    ctx.fillStyle = '#d7263d'; ctx.beginPath(); ctx.moveTo(600, 118); ctx.lineTo(630, 150); ctx.lineTo(570, 150); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#c2185b'; ctx.beginPath(); ctx.ellipse(600, 390, 90, 36, 0, 0, 6.283); ctx.fill();
+    // text
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#7a1e1e'; ctx.font = `bold 30px ${DEV_FONT}`; ctx.fillText('॥ श्री गणेशाय नमः ॥', 330, 110);
+    ctx.fillStyle = '#c8141c'; ctx.font = `bold 104px ${DEV_FONT}`; ctx.fillText('गणेशोत्सव', 330, 230);
+    ctx.fillStyle = '#1e6fb5'; ctx.font = `bold 92px ${DEV_FONT}`; ctx.fillText('सूचना', 330, 340);
+    ctx.fillStyle = '#2e7d32'; ctx.font = `bold 34px ${DEV_FONT}`; ctx.fillText('· सर्व भक्तांना विनंती ·', 384, 430);
+    const lines = [
+      ['🏠', '#2e7d32', 'मंडपात शांती व स्वच्छता राखा.', 'हाच खरा बाप्पाचा मान.'],
+      ['🚫', '#c62828', 'मंडपात प्रवेश करताना', 'कृपया चप्पल बाहेर काढा.'],
+      ['🔇', '#c62828', 'ध्वनीप्रदूषण टाळा.', 'मधुर संगीताचा आनंद घ्या.'],
+      ['🍃', '#2e7d32', 'पर्यावरणाची काळजी घ्या.', 'प्लास्टिकचा वापर टाळा.'],
+      ['🗑️', '#6a1b9a', 'कृपया कचरा योग्य ठिकाणी टाका.', 'स्वच्छता हीच सेवा.'],
+      ['🙏', '#ef6c00', 'शिस्त, संयम आणि सहकार्य ठेवा.', 'मिळून गणेशोत्सव यशस्वी बनवूया.'],
+    ];
+    ctx.textAlign = 'left';
+    lines.forEach(([ic, col, l1, l2], i) => {
+      const y = 500 + i * 76;
+      ctx.font = '38px system-ui, sans-serif'; ctx.fillText(ic, 70, y + 12);
+      ctx.fillStyle = col; ctx.font = `bold 30px ${DEV_FONT}`; ctx.fillText((i + 1) + '.', 130, y);
+      ctx.fillStyle = '#222'; ctx.font = `bold 28px ${DEV_FONT}`; ctx.fillText(l1, 170, y);
+      ctx.font = `26px ${DEV_FONT}`; ctx.fillText(l2, 170, y + 34);
+    });
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#c8141c'; ctx.font = `bold 34px ${DEV_FONT}`; ctx.fillText('आपले सहकार्य हीच आमची शक्ती!!', w / 2, 975);
+    ctx.fillStyle = '#7a1e1e'; ctx.font = `bold 26px ${DEV_FONT}`; ctx.fillText('गणपती बाप्पा मोरया ! मंगलमूर्ती मोरया !!', w / 2, 1008);
+  });
   T.welcome = canvasTex(1024, 256, (ctx, w, h) => {
     ctx.fillStyle = '#ff8c1a'; ctx.fillRect(0, 0, w, h);
     ctx.fillStyle = '#7a1e1e'; ctx.textAlign = 'center';
@@ -405,6 +446,16 @@
     box(px - PORCH.x0 + 0.6, 0.25, PORCH.z1 - PORCH.z0 + 0.4, M.wall, (PORCH.x0 + px + 0.3) / 2, 4.3, DOOR.z);
     const sign = mesh(new THREE.PlaneGeometry(6, 1.5), mat(0xffffff, { map: T.welcome, roughness: 0.8, side: THREE.DoubleSide }), px - 0.2, 2.95, DOOR.z, false);
     sign.rotation.y = Math.PI / 2;
+    // notice poster on the outside of the right wall, beside the door (right-hand side when facing the door)
+    {
+      const posterMat = mat(0xffffff, { map: T.poster, roughness: 0.85 });
+      const poster = mesh(new THREE.PlaneGeometry(0.8, 1.07), posterMat, HX + 0.4 + 0.035, 1.75, DOOR.z - DOOR.width / 2 - 0.75, false);
+      poster.rotation.y = Math.PI / 2;
+      box(0.03, 1.11, 0.84, mat(0xf3efe4, { roughness: 1 }), HX + 0.4 + 0.005, 1.75, DOOR.z - DOOR.width / 2 - 0.75, false);   // paper backing
+      if (C.images && C.images.poster) {   // real photo of the poster, if provided
+        new THREE.TextureLoader().load(C.images.poster + '?v=' + (C.version || 1), tex => { tex.encoding = THREE.sRGBEncoding; posterMat.map = tex; posterMat.needsUpdate = true; });
+      }
+    }
     // marigold garland on the arch (string of small spheres)
     const gar = new THREE.InstancedMesh(new THREE.SphereGeometry(0.09, 8, 6), M.marigold, 90);
     const mtx = new THREE.Matrix4();
