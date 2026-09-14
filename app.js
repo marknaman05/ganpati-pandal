@@ -934,16 +934,16 @@
   function loadTrack(i) { if (!playlist.length) return; trackIdx = (i + playlist.length) % playlist.length; audio.src = playlist[trackIdx].src; }
   function toggleAarti() {
     if (!playlist.length) return toast('No aarti files configured – add mp3s to assets/aarti/ and list them in config.js');
-    if (!audio.src) loadTrack(0);
+    if (!audio.getAttribute('src')) loadTrack(0);
     if (aartiOn) audio.pause();
     else audio.play().catch(err => toast('Could not play aarti: ' + err.message));
   }
   audio.addEventListener('play', () => { aartiOn = true; btnAarti.textContent = '⏸ Aarti'; btnAarti.classList.add('active'); nowPlaying.hidden = false; nowPlaying.querySelector('span').textContent = playlist[trackIdx].title; petals.visible = true; });
   audio.addEventListener('pause', () => { aartiOn = false; btnAarti.textContent = '▶ Aarti'; btnAarti.classList.remove('active'); nowPlaying.hidden = true; petals.visible = false; });
-  audio.addEventListener('ended', () => { loadTrack(trackIdx + 1); audio.play(); });
-  audio.addEventListener('error', () => { aartiOn = false; btnAarti.textContent = '▶ Aarti'; btnAarti.classList.remove('active'); nowPlaying.hidden = true; petals.visible = false; toast('Aarti file not found: ' + (playlist[trackIdx] || {}).src + ' — drop the mp3 into assets/aarti/'); });
+  // loop the aarti; with several tracks, move to the next one
+  audio.addEventListener('ended', () => { if (playlist.length > 1) loadTrack(trackIdx + 1); else audio.currentTime = 0; audio.play().catch(() => {}); });
+  audio.addEventListener('error', () => { audio.removeAttribute('src'); aartiOn = false; btnAarti.textContent = '▶ Aarti'; btnAarti.classList.remove('active'); nowPlaying.hidden = true; petals.visible = false; toast('Aarti file not found: ' + (playlist[trackIdx] || {}).src + ' — drop the mp3 into assets/aarti/'); });
   btnAarti.addEventListener('click', toggleAarti);
-  document.getElementById('btn-next').addEventListener('click', () => { if (!playlist.length) return; loadTrack(trackIdx + 1); audio.play().catch(() => {}); });
 
   // temple bell (WebAudio synthesised, no file needed)
   let actx = null;

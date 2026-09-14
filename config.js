@@ -69,7 +69,6 @@ window.PANDAL_CONFIG = {
 
   // Aarti playlist. Drop mp3 files into assets/aarti/ and list them here.
   aarti: [
-    { title: 'Sukhkarta Dukhharta',          src: 'assets/aarti/sukhkarta-dukhharta.mp3' },
-    { title: 'Ganpati Bappa Morya (Jai Dev)', src: 'assets/aarti/jai-dev-jai-dev.mp3' },
+    { title: 'Sukhkarta Dukhharta', src: 'assets/aarti/sukhkarta-dukhharta.mp3' },
   ],
 };
