@@ -3,7 +3,7 @@
 //  Edit this file only; no need to touch app.js.
 // ---------------------------------------------------------------
 window.PANDAL_CONFIG = {
-  version: 3,   // bump this whenever a model/asset file is replaced, so browsers don't reuse a cached copy
+  version: 4,   // bump this whenever a model/asset file is replaced, so browsers don't reuse a cached copy
 
   // Banner text (from the real banner in the reference photos)
   mandalName:   'पूर्वांचल महाराष्ट्र मंडळ (रजि.)',
@@ -28,7 +28,7 @@ window.PANDAL_CONFIG = {
   // Real logo image (optional) – drawn onto the banner when present
   images: {
     // Mandal logo drawn onto the banner. logoCrop = fractions [x, y, w, h] of the image to use.
-    logo: 'assets/images/logo.png',
+    logo: 'assets/images/logo.jpg',
     logoCrop: [0, 0, 1, 1],
   },
 
