@@ -481,6 +481,13 @@
     box(px - PORCH.x0 + 0.6, 0.25, PORCH.z1 - PORCH.z0 + 0.4, M.wall, (PORCH.x0 + px + 0.3) / 2, 4.3, DOOR.z);
     const sign = mesh(new THREE.PlaneGeometry(6, 1.5), mat(0xffffff, { map: T.welcome, roughness: 0.8, side: THREE.DoubleSide }), px - 0.2, 2.95, DOOR.z, false);
     sign.rotation.y = Math.PI / 2;
+    // mandal banner above the entrance door, on the outside wall (under the porch roof)
+    {
+      const bw = 4.6, bh = 1.05;
+      const bb = mesh(new THREE.PlaneGeometry(bw, bh), mat(0xffffff, { map: T.banner, roughness: 0.8 }), HX + 0.4 + 0.035, DOOR.height + 0.12 + bh / 2, DOOR.z, false);
+      bb.rotation.y = Math.PI / 2;
+      box(0.03, bh + 0.06, bw + 0.06, mat(0x7a1e1e, { roughness: 1 }), HX + 0.4 + 0.005, DOOR.height + 0.12 + bh / 2, DOOR.z, false);   // frame behind it
+    }
     // notice poster on the outside of the right wall, beside the door (right-hand side when facing the door)
     {
       const posterMat = mat(0xffffff, { map: T.poster, roughness: 0.85 });
